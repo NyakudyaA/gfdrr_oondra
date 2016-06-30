@@ -1,0 +1,41 @@
+db:
+  image: kartoza/postgis:9.4-2.1
+  container_name: gfdrr_geonode-db
+  hostname: geonode-db
+  volumes:
+    - ./pg/postgres_data:/var/lib/postgresql
+  environment:
+    - USERNAME=docker
+    - PASS=docker
+  ports:
+    - "6003:5432"
+
+dbbackups:
+  container_name: gfdrr_oondra-db-backup
+  image: kartoza/pg-backup:9.4
+  hostname: pg-backups
+  volumes:
+    - ./backups:/backups
+  links:
+    - db:db
+  environment:
+    - DUMPPREFIX=PG_gfdrr
+    - PGUSER=docker
+    - PGPASSWORD=docker
+    - PGPORT=5432
+    - PGHOST=db
+    - PGDATABASE=gis
+  restart: on-failure:5
+
+geonode:
+  image: kartoza/geonode:latest
+  container_name: gfdrr_geonode
+  hostname: geonode
+  ports:
+    - "8111:8000"
+    - "8181:8080"
+  links:
+    - db:db
+
+
+
