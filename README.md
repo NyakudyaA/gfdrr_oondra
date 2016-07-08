@@ -3,11 +3,16 @@ GFDRR Challenge Online Operational Natural Disaster Risk Assessment platform
 
 # Instructions
 
-Git clone the geonode repository into deployment `git clone git@github.com:GeoNode/geonode.git` and rename the repository as docker-geonode
 
-Copy the Dockerfile , build and 71-apt-cacher-ng.template file at the base of deployment into  docker-geonode .
+Navigate to deployment folder of the gfdrr_oondra repository.
 
-Build the geonode image by running the build script in docker-geonode.
+Git clone the geonode repository  `git clone git@github.com:GeoNode/geonode.git` and rename the repository as docker-geonode
+
+Copy Dockerfile into docker-geonode
+
+Move 71-apt-cacher-ng file into  docker-geonode.
+
+Modify   docker-gonode/geonode/setting.py on the line  `'PUBLIC_LOCATION': 'http://localhost:8080/geoserver/',` to `'PUBLIC_LOCATION': 'http://localhost:8181/geoserver/',`; Since I am going to be forwarding port 80 to 8181 I change the public url to match my port.
 
 Use docker-compose to build and start the containers.
 
