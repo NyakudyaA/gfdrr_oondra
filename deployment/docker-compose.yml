@@ -1,6 +1,6 @@
 db:
   image: kartoza/postgis:9.4-2.1
-  container_name: gfdrr_geonode-db
+  container_name: gfdrr_oondra-geonode-db
   hostname: geonode-db
   volumes:
     - ./pg/postgres_data:/var/lib/postgresql
@@ -29,7 +29,7 @@ dbbackups:
 
 geonode:
   build: docker-geonode
-  container_name: gfdrr_geonode
+  container_name: gfdrr_oondra-geonode
   hostname: geonode
   ports:
     - "8111:8000"
