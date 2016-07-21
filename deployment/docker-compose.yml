@@ -31,16 +31,22 @@ geonode:
   build: docker-geonode
   container_name: gfdrr_oondra-geonode
   hostname: geonode
+  volumes:
+    - ./logs:/var/log/
+    - ./geoserver_data:/geonode/geoserver/data
   ports:
     - "8111:8000"
     - "8181:8080"
+  links:
+    - db:db
   environment:
     - DATABASE_NAME=gis
     - DATABASE_USERNAME=docker
     - DATABASE_PASSWORD=docker
     - DATABASE_HOST=db
-  links:
-    - db:db
+  restart: on-failure:5
+
+
 
 
 

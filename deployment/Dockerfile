@@ -19,13 +19,21 @@ RUN apt-get install -y  python-virtualenv build-essential openssh-server  apache
 WORKDIR /geonode
 ADD . /geonode
 
+
+
 RUN pip install -e /geonode
 RUN paver setup
+
 
 RUN useradd -m geonode
 
 EXPOSE 8000
 EXPOSE 8080
+
+
+
+#RUN python manage.py makemigrations && python manage.py migrate
+#RUN
 
 CMD ["paver", "start", "-b 0.0.0.0:8000","-f"]
 
