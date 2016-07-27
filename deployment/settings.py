@@ -430,13 +430,6 @@ AGON_RATINGS_CATEGORY_CHOICES = {
 
 # Activity Stream
 ACTSTREAM_SETTINGS = {
-    'MODELS': (
-        'people.Profile',
-        'layers.layer',
-        'maps.map',
-        'dialogos.comment',
-        'documents.document',
-        'services.service'),
     'FETCH_RELATIONS': True,
     'USE_PREFETCH': False,
     'USE_JSONFIELD': True,
@@ -472,6 +465,7 @@ NOSE_ARGS = [
 
 SITEURL = "http://localhost:8000/"
 
+
 USE_QUEUE = False
 
 DEFAULT_WORKSPACE = 'geonode'
@@ -497,7 +491,7 @@ OGC_SERVER = {
         # PUBLIC_LOCATION needs to be kept like this because in dev mode
         # the proxy won't work and the integration tests will fail
         # the entire block has to be overridden in the local_settings
-        'PUBLIC_LOCATION': 'http://192.168.2.165:8181/geoserver/',
+        'PUBLIC_LOCATION': 'http://localhost:8181/geoserver/',
         'USER': 'admin',
         'PASSWORD': 'geoserver',
         'MAPFISH_PRINT_ENABLED': True,
@@ -506,11 +500,12 @@ OGC_SERVER = {
         'GEOGIG_ENABLED': False,
         'WMST_ENABLED': False,
         'BACKEND_WRITE_ENABLED': True,
-        'WPS_ENABLED': True,
-        'LOG_FILE': '/var/log/geoserver.log',
+        'WPS_ENABLED': False,
+        'LOG_FILE': '/var/log/geoserver.log' ,
         # Set to name of database in DATABASES dictionary to enable
         'DATASTORE': '',  # 'datastore',
-        'TIMEOUT': 120  # number of seconds to allow for HTTP requests
+        'PG_GEOGIG': False,
+        'TIMEOUT': 10  # number of seconds to allow for HTTP requests
     }
 }
 
@@ -538,7 +533,7 @@ CATALOGUE = {
         # 'ENGINE': 'geonode.catalogue.backends.generic',
 
         # The FULLY QUALIFIED base url to the CSW instance for this GeoNode
-        'URL': '%scatalogue/csw' % SITEURL,
+        'URL': 'http://localhost:8111/catalogue/csw' ,
         # 'URL': 'http://localhost:8080/geonetwork/srv/en/csw',
         # 'URL': 'http://localhost:8080/deegree-csw-demo-3.0.4/services',
 
@@ -566,22 +561,22 @@ PYCSW = {
             'identification_keywords_type': 'theme',
             'identification_fees': 'None',
             'identification_accessconstraints': 'None',
-            'provider_name': 'Kartoza',
-            'provider_url': SITEURL,
-            'contact_name': 'Admire Nyakudya',
-            'contact_position': 'GIS Professional',
+            'provider_name': 'Organization Name',
+            'provider_url': "http://localhost:8111/",
+            'contact_name': 'Lastname, Firstname',
+            'contact_position': 'Position Title',
             'contact_address': 'Mailing Address',
-            'contact_city': 'Cape Town',
-            'contact_stateorprovince': 'Western Cape',
-            'contact_postalcode': '7708',
-            'contact_country': 'South Africa',
-            'contact_phone': '+27 834533162',
+            'contact_city': 'City',
+            'contact_stateorprovince': 'Administrative Area',
+            'contact_postalcode': 'Zip or Postal Code',
+            'contact_country': 'Country',
+            'contact_phone': '+xx-xxx-xxx-xxxx',
             'contact_fax': '+xx-xxx-xxx-xxxx',
-            'contact_email': 'info@kartoza.com',
+            'contact_email': 'Email Address',
             'contact_url': 'Contact URL',
-            'contact_hours': '8am to 16:30pm',
+            'contact_hours': 'Hours of Service',
             'contact_instructions': 'During hours of service. Off on weekends.',
-            'contact_role': 'Administrator',
+            'contact_role': 'pointOfContact',
         },
         'metadata:inspire': {
             'enabled': 'true',
@@ -590,8 +585,8 @@ PYCSW = {
             'date': 'YYYY-MM-DD',
             'gemet_keywords': 'Utility and governmental services',
             'conformity_service': 'notEvaluated',
-            'contact_name': 'Kartoza',
-            'contact_email': 'info@kartoza.com',
+            'contact_name': 'Organization Name',
+            'contact_email': 'Email Address',
             'temp_extent': 'YYYY-MM-DD/YYYY-MM-DD',
         }
     }
@@ -908,7 +903,7 @@ try:
 except ImportError:
     pass
 
-# Load additonal basemaps, see geonode/contrib/api_basemap/README.md
+# Load additonal basemaps, see geonode/contrib/api_basemap/README.md 
 try:
     from geonode.contrib.api_basemaps import *
 except ImportError:
@@ -944,3 +939,5 @@ if 'geonode.geoserver' in INSTALLED_APPS:
     baselayers = MAP_BASELAYERS
     MAP_BASELAYERS = [LOCAL_GEOSERVER]
     MAP_BASELAYERS.extend(baselayers)
+    
+

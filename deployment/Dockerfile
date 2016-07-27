@@ -30,10 +30,4 @@ RUN useradd -m geonode
 EXPOSE 8000
 EXPOSE 8080
 
-
-
-#RUN python manage.py makemigrations && python manage.py migrate
-#RUN
-
 CMD ["paver", "start", "-b 0.0.0.0:8000","-f"]
-

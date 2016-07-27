@@ -104,7 +104,7 @@ def setup_geoserver(options):
         z = zipfile.ZipFile(geoserver_bin, "r")
         z.extractall(webapp_dir)
 
-    _install_data_dir()
+    
 
 
 def _install_data_dir():
@@ -370,9 +370,6 @@ def start_geoserver(options):
 
     download_dir = path('downloaded').abspath()
     jetty_runner = download_dir / os.path.basename(dev_config['JETTY_RUNNER_URL'])
-
-
-
     data_dir = path('geoserver/data').abspath()
     web_app = path('geoserver/geoserver').abspath()
     log_file = '/var/log/jetty.log'
@@ -513,7 +510,7 @@ def reset():
 def _reset():
     sh("rm -rf geonode/development.db")
     sh("rm -rf geonode/uploaded/*")
-    _install_data_dir()
+    
 
 
 @needs(['reset'])
